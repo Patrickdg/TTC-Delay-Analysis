@@ -29,6 +29,7 @@ This data was extracted manually from the data download page of the Canada Weath
 **Daily Climate Data parameters:**
 - 'Climate Daily/Forecast/Sun'
 - Row limit: 2200
+
 **Hourly Climate Data parameters:**
 - 'Climate Hourly'
 - Row limit: 50000
