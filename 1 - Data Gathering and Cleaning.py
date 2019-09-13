@@ -115,7 +115,10 @@ if not os.path.exists('data/processed/subway.csv'):
    sub_df.sort_values(by = 'datetime', inplace = True)
    sub_df.reset_index(drop = True, inplace = True)
 
-   ### Writing
+   sub_df.bound = sub_df.bound.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","")
+   sub_df.station= sub_df.station.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("station","").str.strip()
+   sub_df.line = sub_df.line.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("  ","")
+
    sub_df.to_csv(r'data/processed/subway.csv', header = True, sep = ",")
 
 else:
@@ -145,39 +148,131 @@ if not os.path.exists('data/processed/streetcar.csv'):
 
    sc.vehicle.replace(0,np.nan, inplace = True)
 
+   bound_map = {
+         'nb': 'n',
+         'sb':'s',
+         'eb':'e',
+         'wb':'w',
+         'bw':'both',
+         'b':'both',
+         'up':'n',
+         'down':'s',
+         "bw's":'both',
+         'dn':'s',
+         'bws':'both',
+         'bothways':'both',
+         'west':'w',
+         'east':'e',
+         'north':'n',
+         'south':'s',
+         'both ways':'both',
+         'both way': 'both'}
+
+   sc.bound = sc.bound.str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "")
+   sc.bound = sc.bound.map(bound_map)
+
+   sc.station = sc.station.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("  ","").str.replace("'","")
+   sc.line = sc.line.astype('str').str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("  ","")
+
    sc.to_csv('data/processed/streetcar.csv')
 
 else:
    print("Processed streetcar file already exists.")
 
 ## BUS DATA
-#if not os.path.exists('data/processed/bus.csv'):
-#
-#   bus = pd.DataFrame()
-#   for file in os.listdir('data/raw/ttc/bus'):
-#      book = pd.read_excel('data/raw/ttc/bus/{}'.format(file),
-#                           sheet_name = None)
-#      bus = bus.append(pd.concat(book))
-#
-#   bus.reset_index(drop = True, inplace = True)
-#
-#   bus['datetime'] = bus['Report Date'].astype('str') + " " + bus.Time.astype('str')
-#   bus['datetime'] = pd.to_datetime(bus.datetime, format = "%Y-%m-%d %H:%M:%S")
-#
-#   bus.drop(columns = ['Report Date','Time'], inplace = True)
-#   bus = bus[['datetime','Location','Incident','Min Delay',
-#            'Min Gap','Direction','Route','Vehicle']]
-#   bus.columns = ['datetime','station','code','min delay','min gap','bound','line','vehicle']
-#
-#   bus.to_csv('data/processed/bus.csv')
-#
-#else:
-#   print("Processed bus file already exists.")
+if not os.path.exists('data/processed/bus.csv'):
+
+   bus = pd.DataFrame()
+   for file in os.listdir('data/raw/ttc/bus'):
+      book = pd.read_excel('data/raw/ttc/bus/{}'.format(file),
+                           sheet_name = None)
+      bus = bus.append(pd.concat(book))
+
+   bus.reset_index(drop = True, inplace = True)
+
+   bus.iloc[[117196, 155934, 165427, 207350, 229711, 232357, 247934, 263908,
+             267962, 275230, 286661, 297859, 336624, 337380, 337709, 341519,
+             342344, 369498, 371172, 371712, 380770, 388571, 409915, 409916,
+             412061, 416015, 423381], 2] = bus.iloc[[117196, 155934, 165427, 207350, 229711, 232357, 247934, 263908,
+             267962, 275230, 286661, 297859, 336624, 337380, 337709, 341519,
+             342344, 369498, 371172, 371712, 380770, 388571, 409915, 409916,
+             412061, 416015, 423381], 2].apply(lambda x: x.time())
+
+   bus['datetime'] = bus['Report Date'].astype('str') + " " + bus.Time.astype('str')
+   bus['datetime'] = pd.to_datetime(bus.datetime, format = "%Y-%m-%d %H:%M:%S")
+
+   bus.drop(columns = ['Report Date','Time'], inplace = True)
+   bus = bus[['datetime','Location','Incident','Min Delay',
+            'Min Gap','Direction','Route','Vehicle']]
+   bus.columns = ['datetime','station','code','min delay',
+                  'min gap','bound','line','vehicle']
+
+   bus.bound = bus.bound.str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "")
+
+   bound_map = {
+         'nb': 'n',
+         'sb':'s',
+         'eb':'e',
+         'wb':'w',
+         'bw':'both',
+         'b':'both',
+         'up':'n',
+         'down':'s',
+         "bw's":'both',
+         'dn':'s',
+         'bws':'both',
+         'bothways':'both',
+         'west':'w',
+         'east':'e',
+         'north':'n',
+         'south':'s',
+         'both ways':'both',
+         'both way': 'both'}
+
+   bus.bound = bus.bound.map(bound_map)
+
+   bus.station = bus.station.str.strip().str.lower().str.replace('/',"").str.replace(r'\\',"").str.replace('.',"").str.replace(",","").str.replace("&","and")
+
+   bus.to_csv('data/processed/bus.csv', header = True, sep = ",")
+
+else:
+   print("Processed bus file already exists.")
 
 ## RIDERSHIP DATA
+if not os.path.exists('data/processed/ridership.csv'):
+   r = pd.read_csv('data/raw/ridership/TorontoMeasureData.csv')
+   r = pd.pivot_table(r, index = ['Year','Period'], columns = 'Measure Name', values = 'Value')
+   r.to_csv('data/processed/ridership.csv', header = True, sep = ',', )
+else:
+   print("Processed ridership fil exists.")
+
 ## WEATHER DATA
+if not os.path.exists('data/processed/weather.csv'):
+   w_h = pd.read_csv('data/raw/weather/weatherstats_toronto_hourly.csv')
+   w_h['date_time_local'] = pd.to_datetime(w_h['date_time_local'])
 
+   w = pd.read_csv('data/raw/weather/weatherstats_toronto_daily.csv')[['date','precipitation','rain','snow','snow_on_ground']]
+   w.date = pd.to_datetime(w.date)
+   w.set_index('date', inplace = True)
 
+   ### Processing
+   w_h.drop(columns = ['unixtime','pressure_station','pressure_sea','wind_dir',
+                       'wind_dir_10s','dew_point','cloud_cover_4','cloud_cover_8',
+                       'cloud_cover_10','solar_radiation','humidex'],
+            inplace = True)
+   w_h[['wind_speed','wind_gust','windchill']] = w_h[['wind_speed','wind_gust','windchill']].replace(np.nan, 0)
+
+   w.replace(np.nan, 0, inplace = True)
+
+   w_h = pd.merge(w_h, w, how = 'left', left_on = w_h['date_time_local'].dt.date ,right_on = w.index.date)
+   w_h.drop(columns = ['key_0'], inplace = True)
+   w_h.replace('nan',np.nan, inplace = True)
+   w_h.dropna(axis = 0, inplace = True)
+   w_h.set_index('date_time_local', inplace = True)
+
+   w_h.to_csv('data/processed/weather.csv', header = True, sep = ',')
+else:
+   print("Processed weather file already exists.")
 
 
 
