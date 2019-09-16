@@ -58,7 +58,7 @@ The same manual cleaning was performed for the bus dataset as follows
 - Inconsistent column names 'Delay' and 'Gap' changed to 'Min Delay' and 'Min Gap' from 'ttc-streetcar-delay-data-2019.xlsx', 'Apr 2019' and 'June 2019' worksheets and 'ttc-streetcar-delay-data-2018.xlsx', 'Mar 2018' worksheet
 - Inconsistent 'Time' values displaying both date and time '00:00:00' coerced to 00:00:00
 
-Columns 'bound' and 'station' were also cleaned to coerce inconsistent entries in all files (i.e., removing ?'s, /'s, \'s, spaces, commas, and mapping inconsistent labels).
+Columns 'bound' and 'station' were also cleaned to coerce inconsistent entries in all files (i.e., removing punctuation and mapping inconsistent labels).
 
 ## TTC Ridership Data
 

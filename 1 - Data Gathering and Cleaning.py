@@ -115,9 +115,12 @@ if not os.path.exists('data/processed/subway.csv'):
    sub_df.sort_values(by = 'datetime', inplace = True)
    sub_df.reset_index(drop = True, inplace = True)
 
-   sub_df.bound = sub_df.bound.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","")
-   sub_df.station= sub_df.station.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("station","").str.strip()
-   sub_df.line = sub_df.line.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("  ","")
+   sub_df.bound = sub_df.bound.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
+   sub_df.station= sub_df.station.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
+
+   sub_df.line = sub_df.line.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
+
+   sub_df.station = sub_df.station.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
 
    sub_df.to_csv(r'data/processed/subway.csv', header = True, sep = ",")
 
@@ -157,9 +160,8 @@ if not os.path.exists('data/processed/streetcar.csv'):
          'b':'both',
          'up':'n',
          'down':'s',
-         "bw's":'both',
+         "bws":'both',
          'dn':'s',
-         'bws':'both',
          'bothways':'both',
          'west':'w',
          'east':'e',
@@ -168,12 +170,11 @@ if not os.path.exists('data/processed/streetcar.csv'):
          'both ways':'both',
          'both way': 'both'}
 
-   sc.bound = sc.bound.str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "")
+   sc.bound = sc.bound.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
    sc.bound = sc.bound.map(bound_map)
 
-   sc.station = sc.station.str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("  ","").str.replace("'","")
-   sc.line = sc.line.astype('str').str.strip().str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "").str.replace("(","").str.replace(")","").str.replace("-","").str.replace("  ","")
-
+   sc.station = sc.station.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
+   sc.station = sc.station.str.replace("stn","").str.replace("station","")
    sc.to_csv('data/processed/streetcar.csv')
 
 else:
@@ -193,10 +194,12 @@ if not os.path.exists('data/processed/bus.csv'):
    bus.iloc[[117196, 155934, 165427, 207350, 229711, 232357, 247934, 263908,
              267962, 275230, 286661, 297859, 336624, 337380, 337709, 341519,
              342344, 369498, 371172, 371712, 380770, 388571, 409915, 409916,
-             412061, 416015, 423381], 2] = bus.iloc[[117196, 155934, 165427, 207350, 229711, 232357, 247934, 263908,
-             267962, 275230, 286661, 297859, 336624, 337380, 337709, 341519,
-             342344, 369498, 371172, 371712, 380770, 388571, 409915, 409916,
-             412061, 416015, 423381], 2].apply(lambda x: x.time())
+             412061, 416015, 423381], 2] = bus.iloc[[117196, 155934, 165427,
+                                       207350, 229711, 232357, 247934, 263908,
+                                       267962, 275230, 286661, 297859, 336624,
+                                       337380, 337709, 341519, 342344, 369498,
+                                       371172, 371712, 380770, 388571, 409915,
+                                       409916, 412061, 416015, 423381], 2].apply(lambda x: x.time())
 
    bus['datetime'] = bus['Report Date'].astype('str') + " " + bus.Time.astype('str')
    bus['datetime'] = pd.to_datetime(bus.datetime, format = "%Y-%m-%d %H:%M:%S")
@@ -207,7 +210,7 @@ if not os.path.exists('data/processed/bus.csv'):
    bus.columns = ['datetime','station','code','min delay',
                   'min gap','bound','line','vehicle']
 
-   bus.bound = bus.bound.str.lower().str.replace(r'/', "").str.replace('\\',"").str.replace('.',"").str.replace(r'?', "")
+   bus.bound = bus.bound.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
 
    bound_map = {
          'nb': 'n',
@@ -218,7 +221,6 @@ if not os.path.exists('data/processed/bus.csv'):
          'b':'both',
          'up':'n',
          'down':'s',
-         "bw's":'both',
          'dn':'s',
          'bws':'both',
          'bothways':'both',
@@ -231,7 +233,8 @@ if not os.path.exists('data/processed/bus.csv'):
 
    bus.bound = bus.bound.map(bound_map)
 
-   bus.station = bus.station.str.strip().str.lower().str.replace('/',"").str.replace(r'\\',"").str.replace('.',"").str.replace(",","").str.replace("&","and")
+   bus.station = bus.station.str.lower().str.replace('[^\w\s]','').str.replace("  "," ").str.strip()
+   bus.station = bus.station.str.replace("stn","").str.replace("station","")
 
    bus.to_csv('data/processed/bus.csv', header = True, sep = ",")
 
@@ -273,10 +276,6 @@ if not os.path.exists('data/processed/weather.csv'):
    w_h.to_csv('data/processed/weather.csv', header = True, sep = ',')
 else:
    print("Processed weather file already exists.")
-
-
-
-
 
 
 
