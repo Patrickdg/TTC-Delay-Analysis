@@ -14,24 +14,24 @@ The TTC ridership data was sourced from the [City of Toronto website, Progress P
 From the above site, using the 'Export Data' option, the 2 measures included in the data extract were:
 - 'TTC Average Weekday Ridership', and
 - 'TTC Monthly Ridership
+
 Selecting these measures will output the raw .csv file 'TorontoMeasureData.csv' within this repository.
 
 ## Canada Weather Data
-Weather data was sourced from the [Canada Weather Stats website](https://www.weatherstats.ca/).
+Weather data was sourced from [Canada Weather Stats](https://www.weatherstats.ca/), extracted manually from the [data download page](https://toronto.weatherstats.ca/download.html) using the following parameters:
 
-Hourly data was extracted to allow for extra granularity when analyzing relationships between weather and TTC delays.
+**Daily Climate Data:**
+- 'Climate Daily/Forecast/Sun'
+- Row limit: 2,400
+
+**Hourly Climate Data:**
+- 'Climate Hourly'
+- Row limit: 60,000
+
+Hourly data was extracted to allow for extra granularity when analyzing relationships between weather and TTC delays as weather can change drastically throughout the day and is expected to affect delay occurences and durations.
 Daily data was extracted to capture snow and rain data per day (as hourly data set did not contain these features).
 
-This data was extracted manually from the data download page (found [here](https://toronto.weatherstats.ca/download.html)) with the following parameters selected:
-
-**Daily Climate Data parameters:**
-- 'Climate Daily/Forecast/Sun'
-- Row limit: 2200
-
-**Hourly Climate Data parameters:**
-- 'Climate Hourly'
-- Row limit: 50000
-
+Additional information on the data, features, and methods can be found [here](https://www.weatherstats.ca/faq/).
 
 # Data Cleaning & Processing
 
@@ -40,5 +40,6 @@ This data was extracted manually from the data download page (found [here](https
 ## TTC Ridership Data
 
 ## Weather Data
+
 
 
