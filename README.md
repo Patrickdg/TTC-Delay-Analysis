@@ -6,6 +6,8 @@ Exploratory Analysis of the Toronto Transit Commission (TTC) Delay data from the
 ## Transportation Mode Delay Data
 TTC delay data was sourced for the following modes: [Subway](https://open.toronto.ca/dataset/ttc-subway-delay-data/), [Streetcar](https://open.toronto.ca/dataset/ttc-streetcar-delay-data/), [Bus](https://open.toronto.ca/dataset/ttc-bus-delay-data/)
 
+[See data gathering script](https://github.com/Patrickdg/TTC-Delay-Analysis/blob/master/data_gathering.py)
+
 ## TTC Ridership Data
 The TTC ridership data was sourced from the [City of Toronto website, Progress Portal](https://www.toronto.ca/city-government/data-research-maps/toronto-progress-portal/).
 
