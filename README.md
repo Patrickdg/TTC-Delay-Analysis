@@ -35,11 +35,7 @@ Additional information on the data, features, and methods can be found [here](ht
 
 # Data Cleaning & Processing
 
-## Subway, Streetcar, and Bus Delay Data
-
-## TTC Ridership Data
-
-## Weather Data
+The data cleaning procedures are outlined in detail within the ['data_cleaning' notebook](https://github.com/Patrickdg/TTC-Delay-Analysis/blob/master/data_cleaning.ipynb). 
 
 
 
