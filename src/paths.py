@@ -7,8 +7,9 @@ bus_path_processed = 'data/processed/ttc/bus/bus_data.csv'
 
 bus_path_cleaned = 'data/cleaned_final/ttc/bus/bus_data.csv'
 
-## readmes
+## readmes & code book 
 sc_readme = 'data/raw/ttc/docs/ttc-streetcar-delay-data-readme.xlsx'
+sub_delay_codes = 'data/raw/ttc/docs/ttc-subway-delay-codes.xlsx'
 
 # TTC RIDERSHIP
 ridership_path_processed = 'data/processed/ridership/ridership.csv'
