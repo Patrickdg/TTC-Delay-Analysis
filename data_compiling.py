@@ -123,6 +123,10 @@ if not os.path.exists(bus_file_path):
 ridership_file_path = 'data/processed/ridership/ridership.csv'
 if not os.path.exists(ridership_file_path):
     ridership_data = pd.read_csv(ttc_ridership_path)
-    ridership_data.columns
+    
     #Pivot melted dataframe
-    ridership_data.pivot_table(values = 'Value', columns = ['Measure Name'], index = ['Year','Period'], aggfunc = None)
+    ridership_data = ridership_data.pivot_table(index = ['Year','Period'], 
+                                              columns = ['Measure Name'])
+    ridership_data.reset_index(inplace = True)
+    ridership_data.to_csv(ridership_file_path)
+

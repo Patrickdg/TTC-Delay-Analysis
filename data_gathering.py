@@ -3,33 +3,28 @@ import urllib
 import os
 import json
 import pandas as pd
+from src.paths import MODES
 
 # DECLARATIONS
-MODES = ['subway', 'streetcar', 'bus']
 URL = "https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show"
 PARAM_LIST = {'subway': { "id": "996cfe8d-fb35-40ce-b569-698d51fc683b"}, #subway 
              'streetcar': { "id": "b68cb71b-44a7-4394-97e2-5d2f41462a5d"}, #streetcar
              'bus': { "id": "e271cdae-8788-4980-96ce-6a5c95bc6618"}} #bus 
 
 # INITIALIZE FOLDERS
-for path in ['data/', 'data/raw/', 'data/processed/']:
-    try: 
-        os.mkdir('data/')
-        os.mkdir('data/raw/')
-        os.mkdir('data/raw/ttc/')
-        os.mkdir('data/processed/')
-        os.mkdir('data/processed/ttc/')
-    except FileExistsError:
-        pass 
-
-for raw_processed in ['raw','processed']:
+for raw_processed_clean in ['raw','processed', 'cleaned_final']:
     paths = []
+    
+    paths.append(f'data/{raw_processed_clean}')
+    paths.append(f'data/{raw_processed_clean}/ttc')
+    
     for mode in MODES:
-        paths.append(f'data/{raw_processed}/ttc/{mode}/')
+        paths.append(f'data/{raw_processed_clean}/ttc/{mode}/')
 
     for folder in ['weather','ridership']:
-        paths.append(f'data/{raw_processed}/{folder}/')
+        paths.append(f'data/{raw_processed_clean}/{folder}/')
 
+    print(paths)
     for path in paths:
         try: 
             os.mkdir(path)
