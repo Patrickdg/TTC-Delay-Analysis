@@ -3,10 +3,14 @@ import numpy as np
 import os
 from collections import Counter
 
-# TTC DATA
+# PATHS
 subway_path = 'data/raw/ttc/subway/'
 streetcar_path = 'data/raw/ttc/streetcar/'
 bus_path = 'data/raw/ttc/bus/'
+
+ttc_ridership_path = 'data/raw/ridership/TorontoMeasureData.csv'
+
+# TTC DELAY DATA
 
 ## SUBWAY
 def collapse_cols(col_list):
@@ -113,3 +117,12 @@ if not os.path.exists(bus_file_path):
                                     'Min Gap', 'Direction', 'Vehicle']]
 
     bus_data.to_csv(bus_file_path)
+
+
+# TTC RIDERSHIP DATA
+ridership_file_path = 'data/processed/ridership/ridership.csv'
+if not os.path.exists(ridership_file_path):
+    ridership_data = pd.read_csv(ttc_ridership_path)
+    ridership_data.columns
+    #Pivot melted dataframe
+    ridership_data.pivot_table(values = 'Value', columns = ['Measure Name'], index = ['Year','Period'], aggfunc = None)
