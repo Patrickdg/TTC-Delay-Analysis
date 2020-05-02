@@ -146,3 +146,22 @@ sc_direction_map = {
 }
 
 # BUS
+bus_locations_mapping = {
+    '': ['\\','/','-','(',')','.',',','&', "'",'and', '@','`','[', ']', 'line','route', 'blvd','at','to'],
+    'station': ['stn', 'stion'],
+    'road': [' rd'],
+    ' street': [' str'], 
+    'entire': ['all of', 'all locions', 'all along the', 'all run affected'],
+    'eglinton': ['eglinn','egli ','egl '], 
+    ' west': [' w '], 
+    'bathurst': ['bhurst']
+    }
+
+bus_direction_map = {
+    '': ['\\','/','-','(',')','.',',','&', "'",'and', '@','`','[', ']', "#"],
+    'both': ['bw', 'b/w', 'boths', 'bothways', 'both ways', 'bothway', 'bothays', 'b w' 'both1'], 
+    'n': ['n/b', 'nb', 'northbound', 'up', 'north'],
+    'e': ['e/b', 'eb', 'ew', 'e/w', 'eastbound', 'east'],
+    's': ['s/b', 'sb', 'southbound', 'down', 'south'],
+    'w': ['w/b', 'wb', 'westbound', 'we',r'w\b', 'w.b', 'wst']
+}
