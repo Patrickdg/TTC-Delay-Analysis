@@ -15,6 +15,7 @@ sub_delay_codes = 'data/raw/ttc/docs/ttc-subway-delay-codes.xlsx'
 
 # TTC RIDERSHIP
 ridership_path_processed = 'data/processed/ridership/ridership.csv'
+ridership_path_cleaned = 'data/cleaned_final/ridership/ridership.csv'
 
 # WEATHER
 hourly_weather_path = 'data/raw/weather/weatherstats_toronto_hourly.csv'
