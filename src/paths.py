@@ -20,3 +20,6 @@ ridership_path_cleaned = 'data/cleaned_final/ridership/ridership.csv'
 # WEATHER
 hourly_weather_path = 'data/raw/weather/weatherstats_toronto_hourly.csv'
 daily_weather_path = 'data/raw/weather/weatherstats_toronto_daily.csv'
+
+hourly_path_cleaned = 'data/cleaned_final/weather/weatherstats_toronto_hourly.csv'
+daily_path_cleaned = 'data/cleaned_final/weather/weatherstats_toronto_daily.csv'
