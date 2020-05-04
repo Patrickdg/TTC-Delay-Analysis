@@ -19,7 +19,10 @@ for raw_processed_clean in ['raw','processed', 'cleaned_final']:
     paths.append(f'data/{raw_processed_clean}/ttc')
     
     for mode in MODES:
-        paths.append(f'data/{raw_processed_clean}/ttc/{mode}/')
+        if mode != 'cleaned_final':
+            paths.append(f'data/{raw_processed_clean}/ttc/{mode}/')
+        elif mode == 'cleaned_final':
+            paths.append(f'data/{raw_processed_clean}/')
 
     for folder in ['weather','ridership']:
         paths.append(f'data/{raw_processed_clean}/{folder}/')
